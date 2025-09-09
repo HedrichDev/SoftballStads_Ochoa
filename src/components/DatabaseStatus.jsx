@@ -1,5 +1,5 @@
 import React from 'react';
-import { Database, Wifi, WifiOff, RefreshCw, AlertCircle, Settings } from 'lucide-react';
+import { Database, Wifi, WifiOff, RefreshCw, AlertCircle, Settings, CheckCircle } from 'lucide-react';
 import { useData } from '../context/DataContext';
 
 const DatabaseStatus = ({ onShowSetup }) => {
@@ -12,26 +12,26 @@ const DatabaseStatus = ({ onShowSetup }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center space-x-2 text-blue-600">
-        <RefreshCw className="h-4 w-4 animate-spin" />
-        <span className="text-sm">Cargando datos...</span>
+      <div className="flex items-center space-x-2">
+        <div className="status-pending">
+          <RefreshCw className="h-3 w-3 animate-spin mr-1" />
+          <span>Cargando...</span>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center space-x-3">
-        <div className="flex items-center space-x-1 text-red-600">
-          <WifiOff className="h-4 w-4" />
-          <span className="text-sm">
-            {!isSupabaseConfigured ? 'No configurado' : 'Sin conexión'}
-          </span>
+      <div className="flex items-center space-x-2">
+        <div className="status-offline">
+          <WifiOff className="h-3 w-3 mr-1" />
+          <span>{!isSupabaseConfigured ? 'No configurado' : 'Sin conexión'}</span>
         </div>
         {!isSupabaseConfigured && (
           <button
             onClick={onShowSetup}
-            className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700"
+            className="text-xs bg-blue-600 text-white px-2 py-1 rounded-md hover:bg-blue-700 transition-colors duration-200"
           >
             Configurar
           </button>
@@ -51,14 +51,14 @@ const DatabaseStatus = ({ onShowSetup }) => {
 
   if (!isSupabaseConfigured) {
     return (
-      <div className="flex items-center space-x-3">
-        <div className="flex items-center space-x-1 text-yellow-600">
-          <AlertCircle className="h-4 w-4" />
-          <span className="text-sm">Configuración pendiente</span>
+      <div className="flex items-center space-x-2">
+        <div className="status-pending">
+          <AlertCircle className="h-3 w-3 mr-1" />
+          <span>Configuración pendiente</span>
         </div>
         <button
           onClick={onShowSetup}
-          className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700"
+          className="text-xs bg-blue-600 text-white px-2 py-1 rounded-md hover:bg-blue-700 transition-colors duration-200"
         >
           Configurar Supabase
         </button>
@@ -67,15 +67,17 @@ const DatabaseStatus = ({ onShowSetup }) => {
   }
 
   return (
-    <div className="flex items-center space-x-3 text-green-600">
-      <Wifi className="h-4 w-4" />
-      <Database className="h-4 w-4" />
-      <span className="text-sm">Base de datos conectada</span>
+    <div className="flex items-center space-x-2">
+      <div className="status-online">
+        <CheckCircle className="h-3 w-3 mr-1" />
+        <Database className="h-3 w-3 mr-1" />
+        <span>Base de datos conectada</span>
+      </div>
       <button
         onClick={onShowSetup}
-        className="text-xs text-gray-500 hover:text-gray-700"
+        className="btn-icon p-1"
       >
-        <Settings className="h-3 w-3" />
+        <Settings className="h-3 w-3 text-gray-400" />
       </button>
     </div>
   );
