@@ -58,33 +58,33 @@ const PlayersManager = () => {
       </div>
 
       {/* Filters */}
-      <div className="card">
+      <div className="card-compact">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="search" className="form-label">
               Buscar jugador
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="text"
                 id="search"
                 placeholder="Nombre o número..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="form-input pl-12"
               />
             </div>
           </div>
           <div>
-            <label htmlFor="team-filter" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="team-filter" className="form-label">
               Filtrar por equipo
             </label>
             <select
               id="team-filter"
               value={selectedTeam}
               onChange={(e) => setSelectedTeam(e.target.value)}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+              className="form-select"
             >
               <option value="">Todos los equipos</option>
               {teams.map(team => (
@@ -96,69 +96,69 @@ const PlayersManager = () => {
       </div>
 
       {/* Players Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         {filteredPlayers.map(player => (
-          <div key={player.id} className="card hover:shadow-lg transition-shadow duration-200">
+          <div key={player.id} className="card-compact hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 scale-in">
             <div className="flex items-start justify-between">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-4">
                 <div className="relative">
                   {player.photo ? (
                     <img
                       src={player.photo}
                       alt={player.name}
-                      className="h-12 w-12 rounded-full object-cover"
+                      className="h-16 w-16 rounded-2xl object-cover shadow-lg"
                     />
                   ) : (
-                    <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center">
-                      <User className="h-6 w-6 text-gray-400" />
+                    <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-lg">
+                      <User className="h-8 w-8 text-gray-400" />
                     </div>
                   )}
-                  <div className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full bg-primary-600 flex items-center justify-center">
+                  <div className="absolute -bottom-2 -right-2 h-8 w-8 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg">
                     <span className="text-xs font-bold text-white">#{player.number}</span>
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{player.name}</h3>
-                  <p className="text-sm text-gray-500">{player.team}</p>
+                  <h3 className="text-xl font-bold text-gray-900">{player.name}</h3>
+                  <p className="text-sm font-semibold text-gray-500">{player.team}</p>
                   <p className="text-xs text-gray-400">{player.position}</p>
                 </div>
               </div>
-              <div className="flex space-x-1">
+              <div className="flex space-x-2">
                 <button
                   onClick={() => handleEdit(player)}
-                  className="p-1 text-gray-400 hover:text-primary-600 transition-colors"
+                  className="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-300"
                 >
-                  <Edit className="h-4 w-4" />
+                  <Edit className="h-5 w-5" />
                 </button>
                 <button
                   onClick={() => handleDelete(player.id)}
-                  className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                  className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-300"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-5 w-5" />
                 </button>
               </div>
             </div>
 
             {/* Stats Preview */}
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="grid grid-cols-3 gap-6 text-center">
                 <div>
-                  <p className="text-2xl font-bold text-primary-600">
+                  <p className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
                     {getPlayerAverage(player)}
                   </p>
-                  <p className="text-xs text-gray-500">AVG</p>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">AVG</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-green-600">
+                  <p className="text-3xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">
                     {player.stats?.hits || 0}
                   </p>
-                  <p className="text-xs text-gray-500">HITS</p>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">HITS</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-orange-600">
+                  <p className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
                     {player.stats?.homeRuns || 0}
                   </p>
-                  <p className="text-xs text-gray-500">HR</p>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">HR</p>
                 </div>
               </div>
             </div>
@@ -167,10 +167,10 @@ const PlayersManager = () => {
       </div>
 
       {filteredPlayers.length === 0 && (
-        <div className="text-center py-12">
-          <User className="mx-auto h-12 w-12 text-gray-400" />
-          <h3 className="mt-2 text-sm font-medium text-gray-900">No hay jugadores</h3>
-          <p className="mt-1 text-sm text-gray-500">
+        <div className="text-center py-16">
+          <User className="mx-auto h-20 w-20 text-gray-300" />
+          <h3 className="mt-6 text-lg font-semibold text-gray-900">No hay jugadores</h3>
+          <p className="mt-2 text-gray-500 font-medium">
             {searchTerm || selectedTeam 
               ? 'No se encontraron jugadores con los filtros aplicados'
               : 'Comienza agregando tu primer jugador'
